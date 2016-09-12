@@ -1,3 +1,7 @@
+---
+layout: default
+title: LabNotebook
+---
 # LabNotebook
 
 [![Build Status](https://travis-ci.org/samhinshaw/labnotebook.svg?branch=master)](https://travis-ci.org/samhinshaw/labnotebook)

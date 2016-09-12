@@ -3,7 +3,7 @@ layout: post
 title: Homework 5
 ---
 
-####Goals:
+### Goals:
 
 1. Reorder a factor in a principled way based on the data and demonstrate the effect in arranged data and in figures.
 2. Remake at least one previously made figure, in light of recent coverage of visualization design principles.
