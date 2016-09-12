@@ -26,3 +26,10 @@ github_username:  samhinshaw
 # Build settings
 markdown: kramdown
 theme: minima
+
+paginate: 20
+per_page: 20
+paginate_path: "/page:num/"
+gems: [jekyll-paginate, jekyll-gist]
+enableTags: true
+tagarray: []
