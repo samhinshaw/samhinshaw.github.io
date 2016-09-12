@@ -21,7 +21,7 @@ description: >
 # root of your server.
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://samhinshaw.github.io" # the base hostname & protocol for your site
-cover: "/assets/brandywine_1.jpg"
+cover: "/assets/brandywine_2.jpg"
 logo: "/assets/physics-48.png"
 
 # Build settings
