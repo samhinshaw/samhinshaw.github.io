@@ -1,12 +1,13 @@
 ---
 layout: default
 title: LabNotebook
+author: Sam Hinshaw
 ---
 # LabNotebook
 
-[![Build Status](https://travis-ci.org/samhinshaw/labnotebook.svg?branch=master)](https://travis-ci.org/samhinshaw/labnotebook)
+[![Build Status](https://travis-ci.org/samhinshaw/labnotebook.svg?branch=master)](https://travis-ci.org/samhinshaw/labnotebook =20x)
 
-This R package contains functions useful to my work in the Hancock Lab. 
+This R package contains functions useful to my work in the Hancock Lab.
 
 ### Install LabNotebook
 

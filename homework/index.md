@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Homework 5
+author: Sam Hinshaw
 ---
 
 ### Goals:
@@ -9,7 +10,7 @@ title: Homework 5
 2. Remake at least one previously made figure, in light of recent coverage of visualization design principles.
 3. Write a figure to file explicitly and include it your R Markdown report via `![Alt text](/path/to/img.png)`.
 4. Clean up your repo, to celebrate the completion of STAT 545 and/or to prepare for the glorious future of STAT 547.
-  
+
   **Note to student evaluators:** Yes, I have gotten the OK from Jenny on working with this dataset.  
 
 
@@ -29,13 +30,13 @@ library(maps)
 ```
 
 ```
-## 
+##
 ## Attaching package: 'maps'
 ```
 
 ```
 ## The following object is masked from 'package:plyr':
-## 
+##
 ##     ozone
 ```
 
@@ -43,10 +44,10 @@ library(maps)
 library(RColorBrewer)
 # Pull the CSV from this url
 PSE <- url('http://s3.amazonaws.com/ed-college-choice-public/Most+Recent+Cohorts+(Treasury+Elements).csv')
-pse <- read.csv(PSE, header=TRUE, na.strings = c("NULL", "PrivacySuppressed")) %>% 
+pse <- read.csv(PSE, header=TRUE, na.strings = c("NULL", "PrivacySuppressed")) %>%
   tbl_df()
 SC <- url('http://s3.amazonaws.com/ed-college-choice-public/Most+Recent+Cohorts+(Scorecard+Elements).csv')
-sc <- read.csv(SC, header=TRUE, na.strings = c("NULL", "PrivacySuppressed")) %>% 
+sc <- read.csv(SC, header=TRUE, na.strings = c("NULL", "PrivacySuppressed")) %>%
   tbl_df()
 union <- inner_join(pse, sc)
 ```
@@ -56,9 +57,9 @@ union <- inner_join(pse, sc)
 ```
 
 ```r
-subunion <- union %>% 
+subunion <- union %>%
   select(INSTNM, CONTROL, age_entry, married, md_faminc, median_hh_inc, pct_white, md_earn_wne_p10, poverty_rate, unemp_rate, pct_born_us)
-head(subunion) %>% 
+head(subunion) %>%
   knitr::kable("markdown")
 ```
 
@@ -75,13 +76,13 @@ head(subunion) %>%
 
 #### 1. Reorder a factor in a principled way based on the data and demonstrate the effect in arranged data and in figures.  
 
-Let's take a snippet of data to work with--the entire dataset is just too wide to work with 
+Let's take a snippet of data to work with--the entire dataset is just too wide to work with
 
 ```r
 subset <- subunion %>%
   select(INSTNM, CONTROL, median_hh_inc, poverty_rate, age_entry, married)
-subset %>% 
-  head() %>% 
+subset %>%
+  head() %>%
   kable("markdown")
 ```
 
@@ -99,9 +100,9 @@ subset %>%
 Okay, let's perform a basic `arrange()`.
 
 ```r
-subset %>% 
-  arrange(CONTROL) %>% 
-  head() %>% 
+subset %>%
+  arrange(CONTROL) %>%
+  head() %>%
   kable("markdown")
 ```
 
@@ -119,9 +120,9 @@ subset %>%
 Okay, so that works.  But I think it's important to note that we can use the non-standard evaluation `arrange_()` on a character string for the column name.
 
 ```r
-subset %>% 
-  arrange_("CONTROL") %>% 
-  head() %>% 
+subset %>%
+  arrange_("CONTROL") %>%
+  head() %>%
   kable("markdown")
 ```
 
@@ -153,11 +154,11 @@ glimpse(subset)
 ## $ married       <dbl> 0.03, 0.11, 0.62, 0.17, 0.03, 0.05, 0.25, 0.46, ...
 ```
 
-I'll have to use INSTNM instead of CONTROL because it's the only factor in my data set! 
+I'll have to use INSTNM instead of CONTROL because it's the only factor in my data set!
 
 ```r
-reorder(x = subset$INSTNM) %>% 
-  head() %>% 
+reorder(x = subset$INSTNM) %>%
+  head() %>%
   kable("markdown")
 ```
 
@@ -187,14 +188,14 @@ It'd be great if we could go by state name! Let's pull the state abbreviations f
 
 ```r
 recent <- url('http://s3.amazonaws.com/ed-college-choice-public/Most+Recent+Cohorts+(All+Data+Elements).csv')
-recent <- read.csv(SC, header=TRUE, na.strings = c("NULL", "PrivacySuppressed")) %>% 
+recent <- read.csv(SC, header=TRUE, na.strings = c("NULL", "PrivacySuppressed")) %>%
   tbl_df()
 ```
 
 Now let's make this into a MUCH smaller subset so that we can join just the state abbreviations (STABBR), and perhaps the Accrediting Agency for the college as well.
 
 ```r
-recent_subset <- recent %>% 
+recent_subset <- recent %>%
   select(UNITID, INSTNM, STABBR, AccredAgency)
 full_picture <- inner_join(subset, recent_subset)
 ```
@@ -204,8 +205,8 @@ full_picture <- inner_join(subset, recent_subset)
 ```
 
 ```r
-full_picture %>% 
-  head() %>% 
+full_picture %>%
+  head() %>%
   kable("markdown")
 ```
 
@@ -239,7 +240,7 @@ glimpse(full_picture)
 ```
 
 Now we can go ahead and order our data table based on some more meaningful things than the alphabet.  Let's try `reorder()` again with the state abbreviations.  First let's make our initial unordered plots.  
-First with the maximum poverty rate in each state. 
+First with the maximum poverty rate in each state.
 
 ```r
 str(full_picture)
@@ -305,7 +306,7 @@ ggplot(state_med, aes(x = STABBR, y = med_pov, group = 1)) +
 Okay, now let's reorder the factors to something more meaningful! Let's go by poverty rate since that's what we're measuring.  That initial plot was jumping all over the place and was only ordered alphabetically!
 
 ```r
-Rpict <- full_picture %>% 
+Rpict <- full_picture %>%
   mutate(STABBR = reorder(STABBR, poverty_rate, max))
 data.frame(before = levels(full_picture$STABBR), after = levels(Rpict$STABBR))
 ```
@@ -433,7 +434,7 @@ How about something more simple?  Perhaps just a gradient based system using a p
 state_married <- full_picture %>%
   group_by(STABBR) %>%
   summarize(med_married = median(married))
-brewer <- brewer.pal(n = 9, "Greens") %>% 
+brewer <- brewer.pal(n = 9, "Greens") %>%
   colorRampPalette()
 colorpal <- brewer(length(state_married$med_married))
 ```
@@ -442,7 +443,7 @@ And on to the plot...
 
 ```r
 state_married %>%
-  mutate(STABBR = reorder(STABBR, med_married, FUN = median)) %>% 
+  mutate(STABBR = reorder(STABBR, med_married, FUN = median)) %>%
 ggplot(aes(x = STABBR, y = med_married)) +
   geom_bar(stat = "identity", aes(fill = colorpal))
 ```
@@ -464,9 +465,9 @@ Already done!
 Let's try a PCA plot of these data
 
 ```r
-subsetA <- subunion %>% 
+subsetA <- subunion %>%
    select(INSTNM, CONTROL, age_entry, married, md_faminc, median_hh_inc, pct_white, md_earn_wne_p10, poverty_rate, unemp_rate, pct_born_us)
-subsetA <- inner_join(subsetA, recent_subset) %>% 
+subsetA <- inner_join(subsetA, recent_subset) %>%
   na.omit()
 ```
 
@@ -525,7 +526,7 @@ length(state)
 ```
 
 ```r
-subsetB <- subsetA %>% 
+subsetB <- subsetA %>%
   select(age_entry, married, md_faminc, median_hh_inc, pct_white, md_earn_wne_p10, poverty_rate, unemp_rate, pct_born_us)
 sPCA <- prcomp(subsetB, scale. = TRUE)
 summary(sPCA)
@@ -546,11 +547,11 @@ summary(sPCA)
 Now to the plot!
 
 ```r
-g <- ggbiplot(sPCA, obs.scale = 1, var.scale = 1, 
-              groups = state, 
+g <- ggbiplot(sPCA, obs.scale = 1, var.scale = 1,
+              groups = state,
               circle = TRUE)
 g + scale_color_discrete(name = '') +
-  theme(legend.direction = 'vertical', 
+  theme(legend.direction = 'vertical',
                legend.position = 'right') +
   ggtitle("PCA Plot of School States")
 ```
@@ -568,12 +569,12 @@ ggsave("PCA_states.png", g)
 Wow, that's super colorful.  How about with just the regions?
 
 ```r
-g <- ggbiplot(sPCA, obs.scale = 1, var.scale = 1, 
-              groups = agency, 
+g <- ggbiplot(sPCA, obs.scale = 1, var.scale = 1,
+              groups = agency,
               circle = TRUE)
 g + scale_color_discrete(name = '') +
-  theme(legend.direction = 'horizontal', 
-               legend.position = 'top') + 
+  theme(legend.direction = 'horizontal',
+               legend.position = 'top') +
   ggtitle("PCA Plot of School Accrediting Agencies")
 ```
 
@@ -590,11 +591,11 @@ ggsave("PCAplot_region.png", g)
 How about even fewer categorical variables? I want to use the type of school, CONTROL.
 
 ```r
-g <- ggbiplot(sPCA, obs.scale = 1, var.scale = 1, 
-              groups = CONTROL, 
+g <- ggbiplot(sPCA, obs.scale = 1, var.scale = 1,
+              groups = CONTROL,
               circle = TRUE)
 g + scale_color_discrete(name = '') +
-  theme(legend.direction = 'horizontal', 
+  theme(legend.direction = 'horizontal',
                legend.position = 'top')
 ```
 
@@ -604,7 +605,7 @@ g + scale_color_discrete(name = '') +
 
 ![](index_files/figure-html/unnamed-chunk-21-1.png)<!-- -->
 
-Hmm, unfortunately this isn't working.  If we look up the documentation for `ggbiplot()`, we can see that `groups` must be a factor.  This could actually be helpful for us anyways to have our `CONTROL` group more descriptive!  For now let's just test this outside of the data.frame since that's how we'll be 
+Hmm, unfortunately this isn't working.  If we look up the documentation for `ggbiplot()`, we can see that `groups` must be a factor.  This could actually be helpful for us anyways to have our `CONTROL` group more descriptive!  For now let's just test this outside of the data.frame since that's how we'll be
 
 ```r
 controlFactor = factor(subsetA$CONTROL,labels=c("Public","Private nonprofit","Private-for-profit"))
@@ -628,11 +629,11 @@ head(controlFactor)
 Okay, let's try that again!
 
 ```r
-g <- ggbiplot(sPCA, obs.scale = 1, var.scale = 1, 
-              groups = controlFactor, 
+g <- ggbiplot(sPCA, obs.scale = 1, var.scale = 1,
+              groups = controlFactor,
               circle = TRUE)
 g + scale_color_discrete(name = '') +
-  theme(legend.direction = 'vertical', 
+  theme(legend.direction = 'vertical',
                legend.position = 'right') +
   ggtitle("PCA Plot of Public, Private nonprofit \n and Private for-profit Schools")
 ```
