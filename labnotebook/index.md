@@ -5,7 +5,7 @@ author: Sam Hinshaw
 ---
 # LabNotebook
 
-[![Build Status](https://travis-ci.org/samhinshaw/labnotebook.svg?branch=master)](https://travis-ci.org/samhinshaw/labnotebook =20x)
+[![Build Status](https://travis-ci.org/samhinshaw/labnotebook.svg?branch=master =20x)](https://travis-ci.org/samhinshaw/labnotebook)
 
 This R package contains functions useful to my work in the Hancock Lab.
 
