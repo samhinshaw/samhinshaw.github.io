@@ -5,7 +5,9 @@ author: Sam Hinshaw
 ---
 # LabNotebook
 
-[![Build Status](https://travis-ci.org/samhinshaw/labnotebook.svg =20x)](https://travis-ci.org/samhinshaw/labnotebook)
+<a href="https://travis-ci.org/samhinshaw/labnotebook">
+  <img src="https://travis-ci.org/samhinshaw/labnotebook.svg?branch=master" alt="Build Status" style="height: 20px;"/>
+</a>
 
 This R package contains functions useful to my work in the Hancock Lab.
 
