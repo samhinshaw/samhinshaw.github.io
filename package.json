@@ -1,0 +1,68 @@
+{
+  "name": "HomePage",
+  "description": "Sam Hinshaw's personal webpage",
+  "version": "4.0.0-alpha.6",
+  "keywords": [
+    "css",
+    "sass",
+    "mobile-first",
+    "responsive",
+    "front-end",
+    "framework",
+    "web"
+  ],
+  "homepage": "https://getbootstrap.com",
+  "author": "Sam Hinshaw (http://github.com/samhinshaw)",
+  "contributors": [
+    "Twitter, Inc."
+  ],
+  "scripts": {
+
+  },
+  "style": "dist/css/bootstrap.css",
+  "sass": "scss/bootstrap.scss",
+  "main": "dist/js/bootstrap",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/samhinshaw/samhinshaw.github.io.git"
+  },
+  "bugs": {
+    "url": "https://github.com/samhinshaw/samhinshaw.github.io/issues"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "jquery": ">=1.9.1",
+    "tether": "^1.4.0"
+  },
+  "devDependencies": {
+
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "files": [
+    "dist",
+    "grunt",
+    "js/**/*.js",
+    "scss/**/*.scss",
+    "Gruntfile.js",
+    "LICENSE"
+  ],
+  "jspm": {
+    "main": "js/bootstrap",
+    "directories": {
+      "lib": "dist"
+    },
+    "shim": {
+      "js/bootstrap": {
+        "deps": [
+          "jquery"
+        ],
+        "exports": "$"
+      }
+    },
+    "dependencies": {
+      "jquery": "3"
+    }
+  }
+}
