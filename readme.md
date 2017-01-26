@@ -1,0 +1,1 @@
+Welcome to the GitHub Pages repository for my website! I'm just getting started understanding all this, so feel free to watch as I learn.
